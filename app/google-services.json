@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "16059703840",
+    "project_id": "health-control-82be8",
+    "storage_bucket": "health-control-82be8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:16059703840:android:ddc3299141858efe305245",
+        "android_client_info": {
+          "package_name": "com.kazantsev.healthcontrol"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "16059703840-fiibo20hif0eiqrr72vao3cctoslkf8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCetZ9vcXUO394Md-8bgsW82sHtGL7A2rI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "16059703840-fiibo20hif0eiqrr72vao3cctoslkf8b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

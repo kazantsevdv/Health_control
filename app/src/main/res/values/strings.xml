@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Health control</string>
+    <string name="ok">Ok</string>
+    <string name="Cancel">Отмена</string>
+    <string name="pulse">Пульс</string>
+    <string name="press_up">Давление верхнее</string>
+    <string name="press_down">Давление нижнее</string>
+</resources>
