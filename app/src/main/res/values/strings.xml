@@ -5,4 +5,5 @@
     <string name="pulse">Пульс</string>
     <string name="press_up">Давление верхнее</string>
     <string name="press_down">Давление нижнее</string>
+    <string name="err">Не корректное значение</string>
 </resources>

@@ -15,21 +15,14 @@
         android:orientation="horizontal">
 
 
-        <EditText
-            android:id="@+id/editTextDate"
+        <TextView
+            android:id="@+id/tv_date"
             android:layout_width="wrap_content"
+            android:layout_margin="@dimen/data_margin"
+            android:textSize="@dimen/text_size_big"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="date" />
-
-        <EditText
-            android:id="@+id/editTextTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="time" />
+            tools:text="2021-05-07 01:25"
+             />
     </LinearLayout>
 
     <LinearLayout
@@ -45,12 +38,8 @@
 
         <EditText
             android:id="@+id/et_press_up"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:autofillHints="@string/pulse"
-            android:gravity="center"
-            android:inputType="numberDecimal"
-            tools:text="60" />
+            tools:text="60"
+            style="@style/input_number" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -64,12 +53,8 @@
             android:text="@string/press_down" />
 
         <EditText
-            android:id="@+id/et_press_вщцт"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:autofillHints="@string/pulse"
-            android:gravity="center"
-            android:inputType="numberDecimal"
+            android:id="@+id/et_press_down"
+            style="@style/input_number"
             tools:text="60" />
     </LinearLayout>
     <LinearLayout
@@ -85,11 +70,7 @@
 
         <EditText
             android:id="@+id/et_pulse"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:autofillHints="@string/pulse"
-            android:gravity="center"
-            android:inputType="numberDecimal"
+            style="@style/input_number"
             tools:text="60" />
     </LinearLayout>
 
