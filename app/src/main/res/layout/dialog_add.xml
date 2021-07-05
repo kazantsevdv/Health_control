@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,11 +17,10 @@
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/data_margin"
             android:textSize="@dimen/text_size_big"
-            android:layout_height="wrap_content"
-            tools:text="2021-05-07 01:25"
-             />
+            tools:text="2021-05-07 01:25" />
     </LinearLayout>
 
     <LinearLayout
@@ -38,9 +36,12 @@
 
         <EditText
             android:id="@+id/et_press_up"
-            tools:text="60"
-            style="@style/input_number" />
+            style="@style/input_number"
+            android:hint="@string/_00_"
+            android:importantForAutofill="no"
+            tools:text="60" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,8 +56,11 @@
         <EditText
             android:id="@+id/et_press_down"
             style="@style/input_number"
+            android:importantForAutofill="no"
+            android:hint="@string/_00_"
             tools:text="60" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,6 +75,8 @@
         <EditText
             android:id="@+id/et_pulse"
             style="@style/input_number"
+            android:importantForAutofill="no"
+            android:hint="@string/_00_"
             tools:text="60" />
     </LinearLayout>
 
@@ -83,6 +89,7 @@
 
         <Button
             android:id="@+id/bt_cancel"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dialog_margin"
@@ -90,6 +97,7 @@
 
         <Button
             android:id="@+id/bt_ok"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dialog_margin"

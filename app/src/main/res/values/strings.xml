@@ -6,4 +6,6 @@
     <string name="press_up">Давление верхнее</string>
     <string name="press_down">Давление нижнее</string>
     <string name="err">Не корректное значение</string>
+    <string name="slash">/</string>
+    <string name="_00_">00</string>
 </resources>

@@ -10,10 +10,11 @@ import com.kazantsev.healthcontrol.ui.model.DataItem
 
 class RvAdapter(
     private val VHLists: List<ItemVHList<*, *>>,
+    private var onListItemClickListener: OnListItemClickListener
 ) : ListAdapter<DataItem, BaseViewHolder<ViewBinding, DataItem>>(
     ItemDiffUtil(VHLists)
 ) {
-    private val items = mutableListOf<DataItem>()
+    @Suppress("UNCHECKED_CAST")
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -26,7 +27,7 @@ class RvAdapter(
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<ViewBinding, DataItem>, position: Int) {
-        holder.onBind(currentList[position])
+        holder.onBind(currentList[position], onListItemClickListener)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -53,6 +54,7 @@ class RvAdapter(
             return getItemCallback(oldItem).areContentsTheSame(oldItem, newItem)
         }
 
+        @Suppress("UNCHECKED_CAST")
         private fun getItemCallback(
             item: DataItem
         ): DiffUtil.ItemCallback<DataItem> = fingerprints.find { it.isRelativeItem(item) }
@@ -61,4 +63,8 @@ class RvAdapter(
             ?: throw IllegalStateException("DiffUtil not found for $item")
 
     }
+}
+
+interface OnListItemClickListener {
+    fun onItemClick(data: DataItem.Item)
 }

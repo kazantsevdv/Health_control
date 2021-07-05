@@ -8,5 +8,5 @@ abstract class BaseViewHolder<out V : ViewBinding, in I : DataItem>(
     val binding: V
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    abstract fun onBind(item: I)
+    abstract fun onBind(item: I,onListItemClickListener: OnListItemClickListener)
 }

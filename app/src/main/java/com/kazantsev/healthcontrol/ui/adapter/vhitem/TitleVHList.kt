@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.kazantsev.healthcontrol.R
 import com.kazantsev.healthcontrol.databinding.ItemHeaderBinding
 import com.kazantsev.healthcontrol.ui.adapter.BaseViewHolder
+import com.kazantsev.healthcontrol.ui.adapter.OnListItemClickListener
 import com.kazantsev.healthcontrol.ui.model.DataItem
 
 class TitleVHList : ItemVHList<ItemHeaderBinding, DataItem.Header> {
@@ -26,10 +27,10 @@ class TitleVHList : ItemVHList<ItemHeaderBinding, DataItem.Header> {
 
     private val diffUtil = object : DiffUtil.ItemCallback<DataItem.Header>() {
         override fun areItemsTheSame(oldItem: DataItem.Header, newItem: DataItem.Header) =
-            oldItem.date == oldItem.date
+            oldItem.date == newItem.date
 
         override fun areContentsTheSame(oldItem: DataItem.Header, newItem: DataItem.Header) =
-            oldItem == oldItem
+            oldItem == newItem
     }
 }
 
@@ -37,7 +38,7 @@ class TitleViewHolder(
     binding: ItemHeaderBinding
 ) : BaseViewHolder<ItemHeaderBinding, DataItem.Header>(binding) {
 
-    override fun onBind(item: DataItem.Header) {
+    override fun onBind(item: DataItem.Header, onListItemClickListener: OnListItemClickListener) {
         binding.tvDate.text = item.date
     }
 

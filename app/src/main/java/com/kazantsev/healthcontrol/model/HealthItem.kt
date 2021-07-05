@@ -6,7 +6,7 @@ import java.util.*
 
 @Parcelize
 data class HealthItem(
-    val data: Date= Date(),
+    val date: Date= Date(),
     val presUp: Int=0,
     val presDown: Int=0,
     val pulse: Int=0

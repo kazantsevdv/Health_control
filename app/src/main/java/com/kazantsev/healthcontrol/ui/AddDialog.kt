@@ -1,9 +1,5 @@
 package com.kazantsev.healthcontrol.ui
 
-import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
-import android.app.TimePickerDialog
-import android.app.TimePickerDialog.OnTimeSetListener
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +17,7 @@ class AddDialog : DialogFragment() {
     private var _viewBinding: DialogAddBinding? = null
     private val binding get() = checkNotNull(_viewBinding)
     var dateAndTime: Calendar = Calendar.getInstance()
-//    private val data: Marker? by lazy { arguments?.getParcelable(ARG_PARAM1) }
+    private val data: HealthItem? by lazy { arguments?.getParcelable(ARG_PARAM1) }
 
 
     override fun onCreateView(
@@ -41,7 +37,17 @@ class AddDialog : DialogFragment() {
     }
 
     private fun setupUI() {
+
+        data?.let {
+            dateAndTime.time = it.date
+            binding.etPressUp.setText(it.presUp.toString())
+            binding.etPressDown.setText(it.presDown.toString())
+            binding.etPulse.setText(it.pulse.toString())
+
+        }
         setInitialDateTime()
+
+
     }
 
     private fun setInitialDateTime() {
@@ -115,12 +121,15 @@ class AddDialog : DialogFragment() {
         private const val ARG_PARAM1 = "ARG_PARAM1"
 
         @JvmStatic
-        fun newInstance(data: String) =
+        fun newInstance(data: HealthItem) =
             AddDialog().apply {
                 arguments = Bundle().apply {
-                    //putParcelable(ARG_PARAM1, data)
+                    putParcelable(ARG_PARAM1, data)
                 }
             }
+
+        @JvmStatic
+        fun newInstance() = AddDialog()
     }
 
 

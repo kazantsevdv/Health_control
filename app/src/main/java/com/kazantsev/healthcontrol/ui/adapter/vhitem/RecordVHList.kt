@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.kazantsev.healthcontrol.R
 import com.kazantsev.healthcontrol.databinding.ItemDataBinding
 import com.kazantsev.healthcontrol.ui.adapter.BaseViewHolder
+import com.kazantsev.healthcontrol.ui.adapter.OnListItemClickListener
 import com.kazantsev.healthcontrol.ui.model.DataItem
 
 class RecordVHList : ItemVHList<ItemDataBinding, DataItem.Item> {
@@ -26,9 +27,15 @@ class RecordVHList : ItemVHList<ItemDataBinding, DataItem.Item> {
     override fun getDiffUtil() = diffUtil
 
     private val diffUtil = object : DiffUtil.ItemCallback<DataItem.Item>() {
-        override fun areItemsTheSame(oldItem: DataItem.Item, newItem: DataItem.Item) = oldItem.time == oldItem.time
+        override fun areItemsTheSame(oldItem: DataItem.Item, newItem: DataItem.Item) =
+            oldItem.date == newItem.date &&
+            oldItem.pressUp == newItem.pressUp &&
+            oldItem.pressDown == newItem.pressDown &&
+            oldItem.pulse == newItem.pulse
 
-        override fun areContentsTheSame(oldItem: DataItem.Item, newItem: DataItem.Item) = oldItem == oldItem
+
+        override fun areContentsTheSame(oldItem: DataItem.Item, newItem: DataItem.Item) =
+            oldItem == newItem
     }
 
 }
@@ -37,12 +44,13 @@ class RecordViewHolder(
     binding: ItemDataBinding
 ) : BaseViewHolder<ItemDataBinding, DataItem.Item>(binding) {
 
-    override fun onBind(item: DataItem.Item) {
+    override fun onBind(item: DataItem.Item, onListItemClickListener: OnListItemClickListener) {
         binding.tvTime.text = item.time
         binding.tvPresHi.text = item.pressUp
         binding.tvPresLo.text = item.pressDown
         binding.tvPulse.text = item.pulse
         binding.root.background = item.getPostDrawable()
+        binding.root.setOnClickListener { onListItemClickListener.onItemClick(item) }
     }
 
     private fun DataItem.Item.getPostDrawable() =

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/gray"
-    xmlns:tools="http://schemas.android.com/tools">
-<TextView
-    android:id="@+id/tv_date"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/header_margin"
-    android:textSize="@dimen/text_size_med"
-    tools:text="25 Октября"
-    />
+    android:paddingTop="15dp">
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/header_margin"
+        android:textSize="@dimen/text_size_med"
+        tools:text="25 Октября" />
 </FrameLayout>

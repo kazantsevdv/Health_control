@@ -1,25 +1,25 @@
 package com.kazantsev.healthcontrol.ui
 
-import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.kazantsev.healthcontrol.App
 import com.kazantsev.healthcontrol.R
 import com.kazantsev.healthcontrol.databinding.FragmertHealthBinding
 import com.kazantsev.healthcontrol.model.HealthItem
+import com.kazantsev.healthcontrol.ui.adapter.OnListItemClickListener
 import com.kazantsev.healthcontrol.ui.adapter.RvAdapter
+import com.kazantsev.healthcontrol.ui.adapter.SwipeToDelete
 import com.kazantsev.healthcontrol.ui.adapter.vhitem.RecordVHList
 import com.kazantsev.healthcontrol.ui.adapter.vhitem.TitleVHList
 import com.kazantsev.healthcontrol.ui.model.DataItem
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -35,7 +35,7 @@ class HealthFragment : Fragment() {
 
 
     private val adapterList by lazy(LazyThreadSafetyMode.NONE) {
-        RvAdapter(getVhList())
+        RvAdapter(getVhList(), onListItemClickListener)
     }
 
 
@@ -52,21 +52,8 @@ class HealthFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
-        loadData()
-    }
-
-
-    private fun loadData() {
-        val list: List<DataItem> = listOf(
-            DataItem.Header("dgsd"),
-            DataItem.Item("11:22", "100", "90", "80", R.drawable.green_gradient),
-            DataItem.Item("11:22", "100", "90", "80", R.drawable.green_gradient),
-            DataItem.Header("dgsd"),
-            DataItem.Item("11:22", "100", "90", "80", R.drawable.green_gradient),
-            DataItem.Item("11:22", "100", "90", "80", R.drawable.yellow_gradient),
-        )
-        adapterList.submitList(list)
-
+        setupObservers()
+        initSwipeToDelete()
     }
 
     private fun setupUI() {
@@ -82,7 +69,7 @@ class HealthFragment : Fragment() {
             addItemDecoration(dividerItemDecoration)
         }
         viewBinding.fab.setOnClickListener {
-            val newFragment = AddDialog.newInstance("")
+            val newFragment = AddDialog.newInstance()
             newFragment
                 .show(parentFragmentManager, "dialog")
         }
@@ -92,11 +79,46 @@ class HealthFragment : Fragment() {
         ) { key: String, bundle: Bundle ->
             if (key == DIALOG_RESULT) {
                 val rez: HealthItem = bundle.getParcelable(DIALOG_RESULT) ?: HealthItem()
-                Toast.makeText(activity, bundle.getString(DIALOG_RESULT, rez.toString()), Toast.LENGTH_SHORT)
-                    .show()
+                viewModel.saveItem(rez)
+
             }
         }
     }
+
+    private fun initSwipeToDelete() {
+
+        val swipeToDeleteCallback = SwipeToDelete { positionForRemove: Int ->
+            val removedItem = viewModel.item.value
+            removedItem?.let {
+                viewModel.deleteItem(it[positionForRemove])
+
+            }
+        }
+        ItemTouchHelper(swipeToDeleteCallback).attachToRecyclerView(viewBinding.rvData)
+    }
+
+    private fun setupObservers() {
+        viewModel.item.observe(viewLifecycleOwner, {
+            adapterList.submitList(it)
+
+        })
+    }
+
+    private val onListItemClickListener: OnListItemClickListener =
+        object : OnListItemClickListener {
+            override fun onItemClick(data: DataItem.Item) {
+                val newFragment = AddDialog.newInstance(
+                    HealthItem(
+                        data.date,
+                        data.pressUp.toInt(),
+                        data.pressDown.toInt(),
+                        data.pulse.toInt()
+                    )
+                )
+                newFragment
+                    .show(parentFragmentManager, "dialog")
+            }
+        }
 
     override fun onDestroy() {
         super.onDestroy()
