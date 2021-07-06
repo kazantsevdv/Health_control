@@ -19,15 +19,18 @@ class HealthViewModel @Inject constructor(
     private var _items: MutableLiveData<List<DataItem>> = MutableLiveData()
     val item: LiveData<List<DataItem>> get() = _items
 
+    private var _err: MutableLiveData<String> = MutableLiveData()
+    val err: LiveData<String> get() = _err
+
+
     init {
         getSavedItems()
     }
 
     fun saveItem(item: HealthItem) {
         repo.saveItem(item).addOnFailureListener {
-            // _err.value=it.localizedMessage
+            _err.value=it.localizedMessage
         }
-
     }
 
     private fun getSavedItems() {
@@ -35,15 +38,14 @@ class HealthViewModel @Inject constructor(
             .orderBy("date")
             .addSnapshotListener(EventListener { value, e ->
                 if (e != null) {
-                    //Log.w(TAG, "Listen failed.", e)
                     _items.value = null
+                    _err.value=e.localizedMessage
                     return@EventListener
                 }
 
                 val savedItemsList: MutableList<DataItem> = mutableListOf()
                 var prevDate = ""
                 for (doc in value!!) {
-
                     val item = doc.toObject(HealthItem::class.java)
                     val curDate = converterModel.getDateStr(item.date)
                     if (prevDate != curDate) {
@@ -62,7 +64,7 @@ class HealthViewModel @Inject constructor(
     fun deleteItem(item: DataItem) {
         if (item is DataItem.Item) {
             repo.deleteItem(converterModel.uiToFirebase(item = item)).addOnFailureListener {
-
+                _err.value=it.localizedMessage
             }
         }
     }
@@ -71,7 +73,6 @@ class HealthViewModel @Inject constructor(
     class Factory @Inject constructor(
         private val viewModerProvider: Provider<HealthViewModel>
     ) : ViewModelProvider.Factory {
-
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             require(modelClass == HealthViewModel::class.java)
             return viewModerProvider.get() as T

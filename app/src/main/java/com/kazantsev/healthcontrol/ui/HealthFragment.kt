@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.kazantsev.healthcontrol.App
 import com.kazantsev.healthcontrol.R
 import com.kazantsev.healthcontrol.databinding.FragmertHealthBinding
@@ -99,8 +101,19 @@ class HealthFragment : Fragment() {
 
     private fun setupObservers() {
         viewModel.item.observe(viewLifecycleOwner, {
-            adapterList.submitList(it)
+            if (it.isNullOrEmpty()) {
+                viewBinding.tvNoData.isVisible = true
+                viewBinding.rvData.isVisible = false
+            } else{
+                viewBinding.tvNoData.isVisible = false
+                viewBinding.rvData.isVisible = true
+                adapterList.submitList(it)
+            }
 
+        })
+        viewModel.err.observe(viewLifecycleOwner, {
+            if (it != null)
+                Snackbar.make(viewBinding.rvData, it, Snackbar.LENGTH_SHORT).show()
         })
     }
 
